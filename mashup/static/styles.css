@@ -1,0 +1,136 @@
+/* allow map to fill viewport */
+#map-canvas
+{
+    /* height of these elements */
+    /*height: 100%;*/
+
+    /* no margin around these elements */
+    margin: 0;
+
+    /* disable scrollbars */
+    overflow: hidden;
+
+    /* no padding within these elements */
+    padding: 0;
+    
+    position: absolute;
+	top: 25px;
+	left: 0;
+	bottom: 0;
+	right: 
+      50;
+  width: 100%;
+}
+#header{
+    
+    position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 0px; 
+}
+
+/* center form */
+main #form
+{
+    /* position form "absolutely" where we want it */
+    position: absolute;
+    
+    justify-content: center;
+
+    /* distance from top edge of viewport */
+    top: 28px;
+
+    /* form's width */
+    width: 100%;
+}
+main #form .form-group
+{
+    /* block-level flex container */
+    display: flex;
+
+    /* center container's content */
+    justify-content: center;
+}
+
+/* stylize text box */
+main #q
+{
+    /* override typeahead.js's transparent background */
+    background-color: #ffffff !important;
+
+    /* text box's width */
+    width: 300px;
+}
+
+/* stylize info window */
+#info
+{
+    /* no margin around this element */
+    margin: 0;
+
+    /* allow scrollbars as needed */
+    overflow: auto;
+}
+#info ul
+{
+    margin-bottom: 0;
+}
+.container
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.navbar-default .navbar-brand .blue
+{
+    color: #537fbe;
+}
+.navbar-default .navbar-brand .red
+{
+    color: #ea433b;
+}
+.navbar-default .navbar-brand .yellow
+{
+    color: #f5b82e;
+}
+.navbar-default .navbar-brand .green
+{
+    color: #2e944b;
+}
+.navbar-brand{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    text-align: left;
+    margin: auto;
+    padding:0;
+}
+.navbar-nav li a {
+    line-height: 10px;
+    height: 30px;
+    padding-top: 0;
+    padding-bottom: 0px;
+}
+/* stylize typeahead.js a la http://twitter.github.io/typeahead.js/css/examples.css */
+.tt-menu
+{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 300px;
+}
+.tt-suggestion.tt-cursor {
+    background-color: #0097cf;
+    color: #fff;
+    cursor: pointer;
+}
+.tt-suggestion {
+    margin: 0;
+    padding: 6px 12px;
+}
