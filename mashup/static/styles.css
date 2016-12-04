@@ -14,12 +14,13 @@
     padding: 0;
     
     position: absolute;
-	top: 25px;
+	top: 60px;
 	left: 0;
 	bottom: 0;
 	right: 
       50;
   width: 100%;
+  
 }
 #header{
     
@@ -28,6 +29,7 @@
 	left: 0;
 	right: 0;
 	height: 0px; 
+	color: #800000;
 }
 
 /* center form */
@@ -40,14 +42,26 @@ main #form
 
     /* distance from top edge of viewport */
     top: 28px;
+    z-index:10000;
 
     /* form's width */
     width: 100%;
 }
-main #form .form-group
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+    justify-content: center;
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+    display: flex;
+}
+main .form-group
 {
     /* block-level flex container */
     display: flex;
+    display: inline block;
+    width: auto;
 
     /* center container's content */
     justify-content: center;
@@ -61,6 +75,8 @@ main #q
 
     /* text box's width */
     width: 300px;
+    border: 3px solid #fff;
+
 }
 
 /* stylize info window */
@@ -76,13 +92,7 @@ main #q
 {
     margin-bottom: 0;
 }
-.container
-{
-    /* center contents */
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
+
 .navbar-default .navbar-brand .blue
 {
     color: #537fbe;
@@ -98,6 +108,7 @@ main #q
 .navbar-default .navbar-brand .green
 {
     color: #2e944b;
+
 }
 .navbar-brand{
     position: absolute;
@@ -114,9 +125,24 @@ main #q
     padding-top: 0;
     padding-bottom: 0px;
 }
+
+.navbar-default{
+    z-index:-1;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+.container{
+    
+    margin:0;
+    padding:0;
+    width:100%;
+    
+}
 /* stylize typeahead.js a la http://twitter.github.io/typeahead.js/css/examples.css */
 .tt-menu
 {
+ 
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -124,6 +150,7 @@ main #q
     max-height: 150px;
     overflow-y: auto;
     width: 300px;
+
 }
 .tt-suggestion.tt-cursor {
     background-color: #0097cf;

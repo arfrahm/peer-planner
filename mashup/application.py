@@ -28,6 +28,9 @@ def index():
     if not os.environ.get("API_KEY"):
         raise RuntimeError("API_KEY not set")
     return render_template("index.html", key=os.environ.get("API_KEY"))
+@app.route("/about", methods = ["GET", "POST"])
+def about():
+    return render_template("about.html")
 
 @app.route("/articles")
 def articles():
@@ -35,9 +38,21 @@ def articles():
     articles = lookup(request.args.get("geo"))
     # TODO
     return jsonify(articles)
-
-@app.route("/search")
-def search():
+@app.route("/create-event", methods = ["GET", "POST"])
+def create_event():
+    if (request.method == "POST"):
+        if not request.form.get("event_name"):
+            return apology("Must name your event!")
+        if not request.form.get("event_time"):
+            return apology("Must enter an event time!")
+        # if not isinstance(int(request.form.get("amount")),int): 
+        #     return apology("Must enter an integer to sell")
+        # if int(request.form.get("amount")) < 1:
+        #     return apology("Sell amount must be positive.")
+    else:
+        return render_template("create-event.html")
+@app.route("/filter")
+def filterEvents():
     """Search for places that match query."""
     q = request.args.get("q") + "%"
     postal = db.execute("SELECT * FROM places WHERE postal_code LIKE :q OR place_name LIKE :q ", q=q)

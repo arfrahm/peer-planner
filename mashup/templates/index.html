@@ -11,11 +11,26 @@
             <div id="map-canvas"></div>
 
             <!-- http://getbootstrap.com/css/#forms -->
-            <form id="form">
+            <!--<form id="form">
                 <div class="form-group">
                     <label class="sr-only" for="q">City, State, Postal Code</label>
                     <input class="form-control" id="q" placeholder="City, State, Postal Code" type="text"/>
                 </div>
-            </form>
+            </form> -->
+        </div>
+        <div class="container">
+            <div class="btn-toolbar" role="toolbar"> 
+              <div class="btn-group"> 
+                 
+                <p>Filter icon on a styled link button:
+                <a href="filter" class="btn btn-default">
+                  <span class="glyphicon glyphicon-filter"></span> Filter 
+                </a>
+                </button>
+                <a href="{{url_for('create_event') }}" class="btn btn-default"> 
+                  <span class="glyphicon glyphicon-plus"></span> Add Event
+                </button>
+          </div> 
+        </div> 
         </div>
 {% endblock %}
