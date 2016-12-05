@@ -33,6 +33,7 @@ $(function() {
         }
 
     ];
+    
 
     // options for map
     // https://developers.google.com/maps/documentation/javascript/reference#MapOptions
@@ -53,60 +54,30 @@ $(function() {
     // instantiate map
     map = new google.maps.Map(canvas, options);
     
-    var geocoder = new google.maps.Geocoder();
-    
     // configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
+    var input = document.getElementById('auto-place');
+    console.log(input);
+    var autocomplete = new google.maps.places.Autocomplete(input, options).innerHTML;
+    console.log(autocomplete);
+    var place = autocomplete.center;
+    console.log(place);
+    var geocoder = new google.maps.Geocoder();
+    document.getElementById('submit-event').addEventListener('click', function() {
+            marker = markers.push(new google.maps.Marker({
+              map: map,
+              position: place.geometry.location
+            }));
+            marker.setMap(map);
+            // geocodeAddress(geocoder, map);
+            });
+    
 
 });
 
 /**
  * Adds marker for place to map.
  */
-function addMarker(place)
-{
-    //create markers and marker attributes
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(place.latitude, place.longitude),
-        label: place.place_name,
-        map: map
-    });
-    //set map and create function that will listen for a click on the marker
-    marker.setMap(map);
-    marker.addListener("click", function(){
-        var parameters = {
-            geo: place.postal_code
-        };
-        $.getJSON(Flask.url_for("articles"), parameters)
-        .done(function(data, textStatus, jqXHR) {
-            //if there are no articles, show no data
-            if(data.length==0){
-                showInfo(marker, "No articles available");
-            }
-            else{
-            // call typeahead's callback with search results (i.e., places)
-            //create empty content string, and then fill with content from data, links
-                var content = "";
-                content += "<ul>";
-                for(i=0; i < 5; i++){
-                    content += "<li><a href='"+data[i].link + "'>" + data[i].title+ "</a></li>";
-                }
-                content += "</ul>"
-                showInfo(marker,content)
-            }
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-    
-            // log error to browser's console
-            console.log(errorThrown.toString());
-    
-            // call typeahead's callback with no results
-            
-        });
-    });
-    //create all markers
-    markers.push(marker);
-}
 
 /**
  * Configures application.
@@ -272,4 +243,22 @@ function update()
         // log error to browser's console
         console.log(errorThrown.toString());
     });
-};
+}
+function geocodeAddress(geocoder, map) {
+    console.log("geocoding");
+        geocoder.geocode({'auto_place': auto_place}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+            marker.setMap(map);
+            console.log("set map")
+            marker.push(marker);
+            console.log("pushed")
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+}

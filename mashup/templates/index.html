@@ -11,26 +11,105 @@
             <div id="map-canvas"></div>
 
             <!-- http://getbootstrap.com/css/#forms -->
-            <!--<form id="form">
-                <div class="form-group">
-                    <label class="sr-only" for="q">City, State, Postal Code</label>
-                    <input class="form-control" id="q" placeholder="City, State, Postal Code" type="text"/>
-                </div>
-            </form> -->
         </div>
         <div class="container">
             <div class="btn-toolbar" role="toolbar"> 
-              <div class="btn-group"> 
-                 
-                <p>Filter icon on a styled link button:
-                <a href="filter" class="btn btn-default">
-                  <span class="glyphicon glyphicon-filter"></span> Filter 
-                </a>
-                </button>
-                <a href="{{url_for('create_event') }}" class="btn btn-default"> 
-                  <span class="glyphicon glyphicon-plus"></span> Add Event
-                </button>
-          </div> 
+                <div class="btn-group"> 
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newEvent">
+                      <span class="glyphicon glyphicon-plus"></span>New Event 
+                    </button>
+                    <button type="button" class="btn btn-default" data-toggle="dropdown" data-target=""> 
+                      <span class="glyphicon glyphicon-filter"></span>Filter
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <input type="text" class = "filter" id="filter-event-keyword" placeholder="Events with keyword"/><br>
+                        <li><a href="#" class="filter" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;Social</a></li>
+                        <li><a href="#" class="filter" data-value="option2" tabIndex="-1"><input type="checkbox"/>&nbsp;Meeting</a></li>
+                        <li><a href="#" class="filter" data-value="option3" tabIndex="-1"><input type="checkbox"/>&nbsp;Academic</a></li>
+                        <li><a href="#" class="filter" data-value="option4" tabIndex="-1"><input type="checkbox"/>&nbsp;Food</a></li><br>
+                        <label type="text" id="filter-date-label" for="filter-eventdate" class="filter">Find events after</label><br>
+                        <input type="date" class = "filter" id="filter-event-date"/><br>
+                        <input type="submit" id="filter-submit" class="filter"/>    
+                    </ul>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#hotEvents"> 
+                      <span class="glyphicon glyphicon-fire"></span>What's Hot Now
+                      <span class="caret"></span>
+                    </button>
+                </div>
+
+            </div> 
         </div> 
+        <div class="modal fade" id="newEvent" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Create New Event</h4>
+                </div>
+                <div class="modal-body">
+                <form action="{{ url_for('create_event') }}" method="post">
+                  <fieldset>
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="event_name" placeholder="Name of Event" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="auto-place" name="event_place" placeholder="Location of Event" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="event_time" placeholder="Time of Event" type="text"/>
+                    </div>
+                    <div class="form-group">
+                    <input class="form-control" name="attire" placeholder="Attire" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="cost" placeholder="Cost" type="text"/>
+                    </div>
+                    <div class="form-group">
+                    <input type="checkbox" name="filters" value="social" id="filter_checkbox"/>Social
+                    <input type="checkbox" name="filters" value="meeting" id="filter_checkbox"/>Meeting
+                    <input type="checkbox" name="filters" value="academic" id="filter_checkbox"/>Academic
+                    <input type="checkbox" name="filters" value="food" id="filter_checkbox"/>Food
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="comment">Comments:</label>
+                      <textarea class="form-control" rows="3" id="comment"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button id="submit-event" class="btn btn-default" type="createEvent">Create Event</button>
+                    </div>
+                    
+                </fieldset>
+                </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          <div class="modal fade" id="hotEvents" role="dialog">
+            <div class="modal show">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>       
+            
+                        <h2 class="modal-title">What's Hot</h2>
+                 </div>
+                 <div class="modal-body">
+                  <span class="glyphicon glyphicon-fire"></span><br>
+                  <span class="glyphicon glyphicon-fire"></span><br>
+                  <span class="glyphicon glyphicon-fire"></span><br>
+                  </div>
+                <div class="modal-footer">
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          
         </div>
 {% endblock %}

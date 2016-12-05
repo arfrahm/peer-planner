@@ -14,7 +14,8 @@
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
 
         <!-- https://developers.google.com/maps/documentation/javascript/ -->
-        <script src="https://maps.googleapis.com/maps/api/js?key={{ key | urlencode }}&v=3.exp"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ key | urlencode }}&libraries=places&v=3.exp"></script>
+        
 
         <!-- http://jquery.com/ -->
         <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -53,14 +54,13 @@
                         <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="{{ url_for('index') }}"><h1><span class="blue">Peer</span><span class="green">Planner</span></h1></a>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar">
                             <ul class="nav navbar-nav">
                                 <li><a href="{{ url_for('about') }}">About</a></li>
+                                <li><a href="{{ url_for('faq') }}">FAQs</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <p class="navbar-text navbar-right">Showing Events for <span class="red">Harvard University</span></p>
