@@ -14,7 +14,7 @@
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
 
         <!-- https://developers.google.com/maps/documentation/javascript/ -->
-        <script src="https://maps.googleapis.com/maps/api/js?key={{ key | urlencode }}&libraries=places&v=3.exp"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZUChU-WFm03xvWgThHmmQ7j0e_aB7a9s&v=3.exp&libraries=places" type="text/javascript"></script>
         
 
         <!-- http://jquery.com/ -->
@@ -34,20 +34,18 @@
 
         <!-- app's own JavaScript -->
         <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script>
+            <script type="text/javascript">
+        //     $(function () {
+        //         $('#datetimepicker1').datepicker();
+        //     });
+        // </script>
 
         <title>PeerPlanner {% block title %}{% endblock %}</title>
 
     </head>
 
     <body>
-
         <div class="container">
-
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -59,11 +57,14 @@
                     </div>
                     <div class="collapse navbar-collapse" id="navbar">
                             <ul class="nav navbar-nav">
-                                <li><a href="{{ url_for('about') }}">About</a></li>
-                                <li><a href="{{ url_for('faq') }}">FAQs</a></li>
+                                <li><a href="{{ url_for('about') }}"><h3>About</h3></a></li>
+                                <li><a href="{{ url_for('faq') }}"><h3>FAQs</h3></a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <p class="navbar-text navbar-right">Showing Events for <span class="red">Harvard University</span></p>
+                                <p class="navbar-text navbar-right"><h4>Showing Events for <span class="red">Harvard University</span></h4></p>
+                                <div class="navbar-right-img">
+                                <img src="/static/cs50.png" width="150px"/>
+                                </div>
                             </ul>
                     </div>
                 </div>
@@ -80,7 +81,6 @@
             <main>
                 {% block main %}{% endblock %}
             </main>
-            
         </div>
 
     </body>

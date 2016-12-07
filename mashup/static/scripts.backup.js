@@ -8,7 +8,6 @@ var markers = [];
 // info window
 var info = new google.maps.InfoWindow();
 
-
 // execute when the DOM is fully loaded
 $(function() {
 
@@ -43,7 +42,7 @@ $(function() {
         center: {lat: 42.3770, lng: -71.1256}, // Cambridge, Massachusetts
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        maxZoom: 20,
+        maxZoom: 14,
         panControl: true,
         styles: styles,
         zoom: 13,
@@ -59,139 +58,27 @@ $(function() {
     // configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
     var input = document.getElementById('auto-place');
-    var place_name = document.getElementById('place_name');
-    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    console.log(input);
+    var autocomplete = new google.maps.places.Autocomplete(input, options).innerHTML;
+    //console.log(autocomplete);
+    var place = autocomplete.getPlace();
+    console.log(place);
     var geocoder = new google.maps.Geocoder();
-    
-// create google maps info window
-    var info = new google.maps.InfoWindow(
-        {
-        content: ""
-    });
-    
-    
-
-    
-
-    //handle for event-added
-    $("#create-event-form").submit(function(e) {
-    
-        var url = "/"; // the script where you handle the form input.
-        var posmarker = $("#create-event-form").serializeArray();
-        //console.log(position);
-        var latval;
-        var longval;
-        geocodeAddress(geocoder, map, function(latlng){
-            
-            latval = latlng[0];
-            longval = latlng[1];
-            $("#Latitude").val(latval);
-            $("#Longitude").val(longval);
-            $.ajax({
-               type: "POST",
-               url: url,
-               data:$("#create-event-form").serializeArray(), // serializes the form's elements.
-              
-    
-               success: function(data)
-               {
-               }
-             });
-            }
-    
-                
-            );
-                   
-           
-    
-        //console.log(formdata);
-        
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-        $("#close-new-event").click();
-        // $("create-event-form").reset();
-        //document.getElementById("create-event-form").reset();
-        
-    });
-    
-    //handle for filter form changed
-    $("#filter-event-form").on("input", function(){
-
-        
-        var parameters = {
-          keyword: document.getElementById("filter-event-keyword").value,
-          social: $("#filter-social").prop("checked"),
-          meeting: $("#filter-meeting").prop("checked"),
-          academic: $("#filter-academic").prop("checked"),
-          food: $("#filter-food").prop("checked"),
-          date: document.getElementById("filter-event-date").value,
-            
-        };
-        console.log(parameters);
-        $.getJSON(Flask.url_for("filter"), parameters)
-        .done(function(data, textStatus, jqXHR) {
-        
-       // remove old markers from map
-       removeMarkers();
-
-       // add new markers to map
-       
-       console.log(data);
-       for (var i = 0; i < data.length; i++)
-       {
-           addMarker(data[i]); //passed map object to function
-       }
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-
-        // log error to browser's console
-    });
-            //send filter form data using update method's technique[$.getJSON url_for etc...], changing parameters to the current value of the filter-event-form form
-        //remove all markers existing on map
-    //recieve request in /filter route ->>in application.py
-    //use db.execute to find all entries matching the current sent data ->>in application.py
-    //return a response (use jsonify) ->>in application.py
-    //recieve this returns response and add new markers 
-    });
-    $("#filter-event-form").change( function(){
-        //should be exact same method as above, triggers for checkbox changes instead
-        
-        
-    });
-
-    
-    
+    document.getElementById('submit-event').addEventListener('click', function() {
+            marker = markers.push(new google.maps.Marker({
+              map: map,
+              position: place.geometry.location
+            }));
+            marker.setMap(map);
+            // geocodeAddress(geocoder, map);
+            });
     
 
 });
-// function from CS50 pset 8
-// shows marker and content of window
-function showInfo(marker, content)
-{
-    // set info window's content
-    info.setContent(content);
-
-    // open info window (if not already open)
-    info.open(map, marker);
-}
 
 /**
  * Adds marker for place to map.
  */
-function addMarker(place)
-{
-    //create markers and marker attributes
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(place.lat, place.lng),
-        label: place.event_name,
-        map: map
-    });
-    //set map and create function that will listen for a click on the marker
-    marker.setMap(map);
-    //add click event listener to this marker, make information display.
-   
-    //create all markers
-    markers.push(marker);
-}
 
 /**
  * Configures application.
@@ -242,7 +129,7 @@ function configure()
         update();
     });
 
-    // hide info windeow when text box has focus
+    // hide info window when text box has focus
     $("#q").focus(function(eventData) {
         info.close();
     });
@@ -281,7 +168,7 @@ function search(query, syncResults, asyncResults)
     var parameters = {
         q: query
     };
-    $.getJSON(Flask.url_for("index"), parameters)
+    $.getJSON(Flask.url_for("search"), parameters)
     .done(function(data, textStatus, jqXHR) {
      
         // call typeahead's callback with search results (i.e., places)
@@ -311,7 +198,7 @@ function showInfo(marker, content)
     }
     else
     {
-        div += content +"<img src='/static/fireiconsmall.png'/>";
+        div += content;
     }
 
     // end div
@@ -347,8 +234,6 @@ function update()
        removeMarkers();
 
        // add new markers to map
-       
-       console.log(data);
        for (var i = 0; i < data.length; i++)
        {
            addMarker(data[i]); //passed map object to function
@@ -357,32 +242,23 @@ function update()
     .fail(function(jqXHR, textStatus, errorThrown) {
 
         // log error to browser's console
+        console.log(errorThrown.toString());
     });
 }
-function geocodeAddress(geocoder, resultsMap,callback) {
+function geocodeAddress(geocoder, map) {
     console.log("geocoding");
-
-        var address = document.getElementById('auto-place').value;
-
-        var latlng = new Array(2);
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status ==='OK') {
+        geocoder.geocode({'auto_place': auto_place}, function(results, status) {
+          if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
               map: resultsMap,
               position: results[0].geometry.location
-              
             });
-                    console.log($("#create-event-form").serializeArray());
-
-            latlng[0] = results[0].geometry.location.lat();
-            latlng[1] = results[0].geometry.location.lng();
-            callback(latlng);
             marker.setMap(map);
-            markers.push(marker);
-            showInfo(marker,"pi");
+            console.log("set map")
+            marker.push(marker);
+            console.log("pushed")
           } else {
-              console.log("no");
             alert('Geocode was not successful for the following reason: ' + status);
           }
         });

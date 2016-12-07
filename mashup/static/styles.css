@@ -21,6 +21,8 @@
     width: 100%;
   
 }
+.hideClass
+    {display:none;}
 #header{
     
     position: absolute;
@@ -100,20 +102,24 @@ main #q
     position: absolute;
     width: 100%;
     left: 30px;
-    top: 0px;
     /*text-align: left;*/
     /*margin: auto;*/
     /*padding:0px;*/
-    /*line-height: 25px;*/
+
     /*height: 25px;*/
-    /*padding-bottom:50px;*/
+    padding-bottom:50px;
 }
-.navbar-nav li a {
-    line-height: 75px;
-    height: 75px;
-    padding-top: 0;
-    padding-bottom: 50px;
-    height: 100px;
+.navbar-nav li {
+    
+    
+    
+}
+.navbar-right-img{
+    margin:0px;
+    right: 0px;
+    padding-right: 0px;
+    border:0px;
+    text-align: center;
 }
 
 .navbar-default{
@@ -202,6 +208,9 @@ main #q
 
 }
 .optform .focus{
+}
+.filter_checkbox{
+    margin: 10px 20px;
 }
 
 #optform.focus{}

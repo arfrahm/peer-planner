@@ -1,7 +1,7 @@
    {% extends "layout.html" %}
 
 {% block title %}
-    stocks
+    
 {% endblock %}
 
 {% block main %}
@@ -23,15 +23,17 @@
                       <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
+                        <form action="/" method="post" id="filter-event-form">
                         <input type="text" class = "filter" id="filter-event-keyword" placeholder="Events with keyword"/><br>
-                        <li><a href="#" class="filter" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;Social</a></li>
-                        <li><a href="#" class="filter" data-value="option2" tabIndex="-1"><input type="checkbox"/>&nbsp;Meeting</a></li>
-                        <li><a href="#" class="filter" data-value="option3" tabIndex="-1"><input type="checkbox"/>&nbsp;Academic</a></li>
-                        <li><a href="#" class="filter" data-value="option4" tabIndex="-1"><input type="checkbox"/>&nbsp;Food</a></li><br>
+                        <li><a href="#" class="filter" data-value="option1" tabIndex="-1"><input type="checkbox" id="filter-social" />&nbsp;Social</a></li>
+                        <li><a href="#" class="filter" data-value="option2" tabIndex="-1"><input type="checkbox" id="filter-meeting"/>&nbsp;Meeting</a></li>
+                        <li><a href="#" class="filter" data-value="option3" tabIndex="-1"><input type="checkbox" id="filter-academic"/>&nbsp;Academic</a></li>
+                        <li><a href="#" class="filter" data-value="option4" tabIndex="-1"><input type="checkbox" id="filter-food"/>&nbsp;Food</a></li><br>
                         <label type="text" id="filter-date-label" for="filter-eventdate" class="filter">Find events after</label><br>
                         <input type="date" class = "filter" id="filter-event-date"/><br>
-                        <input type="submit" id="filter-submit" class="filter"/>    
+                    </form>
                     </ul>
+                    
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#hotEvents"> 
                       <span class="glyphicon glyphicon-fire"></span>What's Hot Now
                       <span class="caret"></span>
@@ -50,28 +52,35 @@
                   <h4 class="modal-title">Create New Event</h4>
                 </div>
                 <div class="modal-body">
-                <form action="{{ url_for('create_event') }}" method="post">
+                <form action="/" method="post" id="create-event-form">
                   <fieldset>
+                    <div id="divSample" class="hideClass">Latitude:
+                      <input type="text" id="Latitude" name="lat" value="">
+                      <br>
+                      <br>Longitude:
+                      <input type="text" id="Longitude" name="lng" value="">
+                      <br>
+                    </div>
                     <div class="form-group">
-                        <input autocomplete="off" autofocus class="form-control" name="event_name" placeholder="Name of Event" type="text"/>
+                        <input autocomplete="off" autofocus class="form-control" id="event_name" name="event_name" placeholder="Name of Event" type="text"/>
                     </div>
                     <div class="form-group">
                         <input class="form-control" id="auto-place" name="event_place" placeholder="Location of Event" type="text"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="event_time" placeholder="Time of Event" type="text"/>
+                        <input class="form-control" id="event_time" name="event_time" placeholder="Time of Event" type="text"/>
                     </div>
                     <div class="form-group">
-                    <input class="form-control" name="attire" placeholder="Attire" type="text"/>
+                    <input class="form-control" id="attire" name="attire" placeholder="Attire" type="text"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="cost" placeholder="Cost" type="text"/>
+                        <input class="form-control" id="cost" name="cost" placeholder="Cost" type="text"/>
                     </div>
                     <div class="form-group">
-                    <input type="checkbox" name="filters" value="social" id="filter_checkbox"/>Social
-                    <input type="checkbox" name="filters" value="meeting" id="filter_checkbox"/>Meeting
-                    <input type="checkbox" name="filters" value="academic" id="filter_checkbox"/>Academic
-                    <input type="checkbox" name="filters" value="food" id="filter_checkbox"/>Food
+                    <input type="checkbox" name="filters" value="social" id="social_checkbox"/>Social    
+                    <input type="checkbox" name="filters" value="meeting" id="meeting_checkbox"/>  Meeting   
+                    <input type="checkbox" name="filters" value="academic" id="acad_checkbox"/>  Academic
+                    <input type="checkbox" name="filters" value="food" id="food_checkbox"/>  Food
                     </div>
                     
                     <div class="form-group">
@@ -86,7 +95,7 @@
                 </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal" id="close-new-event">Close</button>
                 </div>
               </div>
               
@@ -110,6 +119,10 @@
                 </div>
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-          
+          </div>
+          </div>
+        <div class="modal fade" id="faq" role="dialog">
+          <div class="modal show">
+            </div>
         </div>
 {% endblock %}
